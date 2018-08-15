@@ -1,0 +1,67 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="fedora 28 安装后的配置"><meta name="keywords" content="linux,chrome,sublime"><meta name="author" content="Allen Lau,undefined"><meta name="copyright" content="Allen Lau"><title>fedora 28 安装后的配置 | Allen's Blogs</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.5.6"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css?version=1.5.6"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装shadowsocks"><span class="toc-number">1.</span> <span class="toc-text">安装shadowsocks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载SwitchyOmega"><span class="toc-number">2.</span> <span class="toc-text">下载SwitchyOmega</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proxychains"><span class="toc-number">3.</span> <span class="toc-text">proxychains</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置-etc-proxychains-conf"><span class="toc-number">3.2.</span> <span class="toc-text">配置 /etc/proxychains.conf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#i3管理器"><span class="toc-number">4.</span> <span class="toc-text">i3管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-1"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">4.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置i3中文输入法"><span class="toc-number">4.3.</span> <span class="toc-text">配置i3中文输入法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#好用的工具-sublime-text3"><span class="toc-number">5.</span> <span class="toc-text">好用的工具 sublime-text3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-2"><span class="toc-number">5.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置主题-boxy"><span class="toc-number">5.2.</span> <span class="toc-text">配置主题(boxy)</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Allen Lau</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">4</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">6</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Allen's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">fedora 28 安装后的配置</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-07-28</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>现在重装过我的linux系统大概3次，每次装完系统都要配置好半天，不像windows一样，装完之后就可以用了，还会出现不少的问题，现在作一个记录，为了下次的重装系统不再麻烦</p>
+<h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p>shadowsocks 在我之前都是可以用的，但是，我在今天的fedora28后，用sudo dnf install shadowsocks-qt5 后发现用不了了，网上一查，好多都说用不了了，后来有一个老铁说可以用shadowsocks-libev代替，下面写一些步骤</p>
+<ul>
+<li>sudo dnf install shadowsocks-libev</li>
+<li><p>配置一下 /etc/shadowsocks-libev/config.json</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;你的服务器ip或域名&quot;,</span><br><span class="line">    &quot;server_port&quot;:服务器端口,</span><br><span class="line">    &quot;local_port&quot;:本地端口,</span><br><span class="line">    &quot;password&quot;:&quot;密码&quot;,</span><br><span class="line"> 	&quot;timeout&quot;:60,</span><br><span class="line">    &quot;method&quot;:&quot;加密方式&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ss-local [-c /etc/shadowsocks-libev/config.json]<br>这样就搞定了<br>这是用配置文件的方式，可以用另外一种方式</p>
+</li>
+</ul>
+<blockquote>
+<p>ss-local -s 服务器地址 -p 服务器端口 -l 本地端端口 -k 密码 -m 加密方法</p>
+</blockquote>
+<p>配合nohup和&amp;可以使之后台运行，关闭终端也不影响</p>
+<blockquote>
+<p>nohup ss-local &gt; /dev/null 2&gt;&amp;1 &amp;</p>
+</blockquote>
+<p>shadowsocks客户端启动后，其他程序并不会直接应用socks5连接，浏览器要用一些插件来连接，比如SwitchOmega</p>
+<h2 id="下载SwitchyOmega"><a href="#下载SwitchyOmega" class="headerlink" title="下载SwitchyOmega"></a>下载SwitchyOmega</h2><p>chrome 的插件商店是需要翻墙的，以前可以到其他地方把这个插件下载下来，拖进插件管理中心就行了。但是现在版本更新后好像不行了<br>我的所有插件都是和chrome账户同步了的，所以我只需要登陆账户就行了，那么问题就来了，chrome登陆账户也是需要翻墙的<br>现在的办法就是用全局代理，给出设置后的截图</p>
+<p><img src="https://yjqing.xin/file/blog2.png" alt="text"></p>
+<p>设置好之后就全局代理了</p>
+<h2 id="proxychains"><a href="#proxychains" class="headerlink" title="proxychains"></a>proxychains</h2><p>如果某个应用想要临时代理以下，那就需要用到proxychains了</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><blockquote>
+<p>sudo dnf install proxychains</p>
+</blockquote>
+<h3 id="配置-etc-proxychains-conf"><a href="#配置-etc-proxychains-conf" class="headerlink" title="配置 /etc/proxychains.conf"></a>配置 /etc/proxychains.conf</h3><p>把这个文件最后一行改为</p>
+<blockquote>
+<p>socks5  127.0.0.1 1080</p>
+</blockquote>
+<p>在开启shadowsocks的情况下，就可以直接用 proxychains4 某某程序 来临时代理一下了</p>
+<h2 id="i3管理器"><a href="#i3管理器" class="headerlink" title="i3管理器"></a>i3管理器</h2><p>作为一个非常强大的平铺式桌面管理器，在我朋友@nova第一次给我用了之后就爱不释手了，我的朋友们全都在用它</p>
+<h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><p>借助nova的博客<a href="https://nova.moe/" target="_blank" rel="noopener">https://nova.moe/</a>，安装</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置文件在 /home/allen/.config/i3/config，我的配置文件在<a href="https://github.com/allenliu123/config/blob/master/config" target="_blank" rel="noopener">我的github</a>上</p>
+<h3 id="配置i3中文输入法"><a href="#配置i3中文输入法" class="headerlink" title="配置i3中文输入法"></a>配置i3中文输入法</h3><p>i3里面只有英文输入，对于一个中国人必须要一个中文输入法呀<br>执行两步就够了</p>
+<blockquote>
+<p>终端输入 ibus-daemon<br>然后ibus-setup添加中文 </p>
+</blockquote>
+<p>搞定</p>
+<h2 id="好用的工具-sublime-text3"><a href="#好用的工具-sublime-text3" class="headerlink" title="好用的工具 sublime-text3"></a>好用的工具 sublime-text3</h2><p>sublime 是一个非常小，但是功能非常强大的文本编辑器</p>
+<h3 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h3><blockquote>
+<p>sudo dnf install sublime-text</p>
+</blockquote>
+<p>如果没有的话，可能需要自己到官网上下载repo</p>
+<h3 id="配置主题-boxy"><a href="#配置主题-boxy" class="headerlink" title="配置主题(boxy)"></a>配置主题(boxy)</h3><p>boxy 是我非常喜欢的主题，尤其是包里面的tomorrow</p>
+<blockquote>
+<p>ctrl + shift + p -&gt; install package control</p>
+</blockquote>
+<p>它会安装Package Control 功能</p>
+<blockquote>
+<p>现在 ctrl + shift + p -&gt; package control install package -&gt; boxy theme</p>
+</blockquote>
+<p>左下角会有安装进度<br>安装完了就可以设置主题了</p>
+<blockquote>
+<p>Preferences -&gt; Theme -&gt; Boxy Tomorrow.sublime-theme<br>Preferences -&gt; Color Theme -&gt; Boxy Tomorrow</p>
+</blockquote>
+<p>基本上的配置就完成了，给个截图吧</p>
+<p><img src="https://yjqing.xin/file/blog3.png" alt="success"></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Allen Lau</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yjqing.xin/Fedora-28-configuration-after-installation/">https://blog.yjqing.xin/Fedora-28-configuration-after-installation/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a><a class="post-meta__tags" href="/tags/chrome/">chrome</a><a class="post-meta__tags" href="/tags/sublime/">sublime</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/linux-mongodb-authentication/"><i class="fa fa-chevron-left">  </i><span>Linux上 MongoDB 实现远程连接并设置账号密码</span></a></div><div class="next-post pull-right"><a href="/jocl/"><span>用JOCL做GPU编程</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2018 By Allen Lau</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.5.6"></script><script src="/js/fancybox.js?version=1.5.6"></script><script src="/js/sidebar.js?version=1.5.6"></script><script src="/js/copy.js?version=1.5.6"></script><script src="/js/fireworks.js?version=1.5.6"></script><script src="/js/transition.js?version=1.5.6"></script><script src="/js/scroll.js?version=1.5.6"></script><script src="/js/head.js?version=1.5.6"></script></body></html>
