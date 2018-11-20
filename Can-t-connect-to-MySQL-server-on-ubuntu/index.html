@@ -1,0 +1,56 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="ubuntu mariadb 无法连接远程连接的解决思路"><meta name="keywords" content="linux,mariadb"><meta name="author" content="Allen Lau,undefined"><meta name="copyright" content="Allen Lau"><title>ubuntu mariadb 无法连接远程连接的解决思路 | Allen's Blogs</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.5.6"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css?version=1.5.6"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置数据库可外网访问"><span class="toc-number">1.</span> <span class="toc-text">设置数据库可外网访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查mysqld是否开启和端口监听情况"><span class="toc-number">2.</span> <span class="toc-text">检查mysqld是否开启和端口监听情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改配置文件"><span class="toc-number">3.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查ip能否ping通和3306是否能访问"><span class="toc-number">4.</span> <span class="toc-text">检查ip能否ping通和3306是否能访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查防火墙"><span class="toc-number">5.</span> <span class="toc-text">检查防火墙</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Allen Lau</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">7</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Allen's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">ubuntu mariadb 无法连接远程连接的解决思路</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-20</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>今天在阿里云服务器上安装mysql，原本以为会很顺利，结果总是无法远程连接<br>搞了很久才解决，浪费了这么多时间，写篇博客庆祝一下，避免下次在入坑</p>
+<h2 id="设置数据库可外网访问"><a href="#设置数据库可外网访问" class="headerlink" title="设置数据库可外网访问"></a>设置数据库可外网访问</h2><p>mysqladmin 初始化的用户一般是只能本地登录访问的，要添加一个外网访问的数据库</p>
+<blockquote>
+<p>mysql -u root -p<br>//新建用户<br>create user username@localhost identified by ‘password’; // 设置外网访问create user username@’%’ identified by ‘password’;<br>//设置权限<br>grant all privileges on testdb.* to ‘username’;</p>
+</blockquote>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2010-25-50.png" alt=""><br>原本以为这样就成功了，谁知道输入命令mysql -h 120.79.237.201 -P 3306 -u root -p<br>ERROR 2003 (HY000): Can’t connect to MySQL server on ‘120.79.237.201 (111)<br>连接不上<br>开始找原因</p>
+<h2 id="检查mysqld是否开启和端口监听情况"><a href="#检查mysqld是否开启和端口监听情况" class="headerlink" title="检查mysqld是否开启和端口监听情况"></a>检查mysqld是否开启和端口监听情况</h2><blockquote>
+<p>netstat -nltp </p>
+</blockquote>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2009-30-35.png" alt=""></p>
+<p>这里mysqld的端口是3306，0.0.0.0也没错<br>如果你的不是0.0.0.0，而是127.0.0.1，需要修改/etc/mysql/mariadb.conf.d/50-server.cnf</p>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>ubuntu 的配置文件在/etc/mysql/mariadb.conf.d/50-server.cnf，不知道为什么要放在这样一个地方，</p>
+<blockquote>
+<p>vim /etc/mysql/mariadb.conf.d/50-server.cnf</p>
+</blockquote>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2009-35-02.png" alt=""></p>
+<p>把bind-address=127.0.0.1 改为 bind-address=0.0.0.0 或者直接注释掉<br>重启服务</p>
+<blockquote>
+<p>/etc/init.d/mysql restart</p>
+</blockquote>
+<p>改为0.0.0.0会像上图一样，但是注释掉的话，会变为这样</p>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2009-40-37.png" alt=""></p>
+<p>这样是正常的，0.0.0.0是所有IPv4的网络，:::表示所有IPv6的ip访问，都没问题</p>
+<h2 id="检查ip能否ping通和3306是否能访问"><a href="#检查ip能否ping通和3306是否能访问" class="headerlink" title="检查ip能否ping通和3306是否能访问"></a>检查ip能否ping通和3306是否能访问</h2><blockquote>
+<p>ping 120.79.237.201</p>
+</blockquote>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2009-47-04.png" alt=""></p>
+<blockquote>
+<p>telnet 120.79.237.201 3306</p>
+</blockquote>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2009-54-09.png" alt=""></p>
+<p>问题来了，3306不通</p>
+<h2 id="检查防火墙"><a href="#检查防火墙" class="headerlink" title="检查防火墙"></a>检查防火墙</h2><blockquote>
+<p>sudo iptables -L -n</p>
+</blockquote>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2009-57-48.png" alt=""></p>
+<p>这里也没问题，已经开放3306端口了，如果你的3306没开，输入命令iptables -A INPUT -p tcp –dport 3306 -j ACCEPT 即可</p>
+<p>都没问题，想了好久，想到会不会是服务商的防火墙规则</p>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2009-52-47.png" alt=""></p>
+<p>Oops, 真的是服务上的防火墙的问题，赶快添加一条规则</p>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2010-02-18.png" alt=""></p>
+<blockquote>
+<p>mysql -h 120.79.237.201 -u root -p</p>
+</blockquote>
+<p><img src="https://yjqing.xin/file/Screenshot%20from%202018-11-20%2010-16-58.png" alt=""></p>
+<p>成功！！！</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Allen Lau</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yjqing.xin/Can-t-connect-to-MySQL-server-on-ubuntu/">https://blog.yjqing.xin/Can-t-connect-to-MySQL-server-on-ubuntu/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a><a class="post-meta__tags" href="/tags/mariadb/">mariadb</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/enron-data-visualization/"><span>enron 数据可视化 + itunes 歌手单曲统计</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2018 By Allen Lau</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.5.6"></script><script src="/js/fancybox.js?version=1.5.6"></script><script src="/js/sidebar.js?version=1.5.6"></script><script src="/js/copy.js?version=1.5.6"></script><script src="/js/fireworks.js?version=1.5.6"></script><script src="/js/transition.js?version=1.5.6"></script><script src="/js/scroll.js?version=1.5.6"></script><script src="/js/head.js?version=1.5.6"></script><script src="/js/search/local-search.js"></script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>Powered by</span> <a href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
