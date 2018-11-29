@@ -12,7 +12,7 @@
 <ul>
 <li>sudo dnf install shadowsocks-libev</li>
 <li><p>配置一下 /etc/shadowsocks-libev/config.json</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;你的服务器ip或域名&quot;,</span><br><span class="line">    &quot;server_port&quot;:服务器端口,</span><br><span class="line">    &quot;local_port&quot;:本地端口,</span><br><span class="line">    &quot;password&quot;:&quot;密码&quot;,</span><br><span class="line"> 	&quot;timeout&quot;:60,</span><br><span class="line">    &quot;method&quot;:&quot;加密方式&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"server"</span>:<span class="string">"你的服务器ip或域名"</span>,</span><br><span class="line">    <span class="string">"server_port"</span>:服务器端口,</span><br><span class="line">    <span class="string">"local_port"</span>:本地端口,</span><br><span class="line">    <span class="string">"password"</span>:<span class="string">"密码"</span>,</span><br><span class="line"> 	<span class="string">"timeout"</span>:<span class="number">60</span>,</span><br><span class="line">    <span class="string">"method"</span>:<span class="string">"加密方式"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>ss-local [-c /etc/shadowsocks-libev/config.json]<br>这样就搞定了<br>这是用配置文件的方式，可以用另外一种方式</p>
 </li>
@@ -21,39 +21,30 @@
 <p>ss-local -s 服务器地址 -p 服务器端口 -l 本地端端口 -k 密码 -m 加密方法</p>
 </blockquote>
 <p>配合nohup和&amp;可以使之后台运行，关闭终端也不影响</p>
-<blockquote>
-<p>nohup ss-local &gt; /dev/null 2&gt;&amp;1 &amp;</p>
-</blockquote>
+<p><code>nohup ss-local &gt; /dev/null 2&gt;&amp;1 &amp;</code></p>
 <p>shadowsocks客户端启动后，其他程序并不会直接应用socks5连接，浏览器要用一些插件来连接，比如SwitchOmega</p>
 <h2 id="下载SwitchyOmega"><a href="#下载SwitchyOmega" class="headerlink" title="下载SwitchyOmega"></a>下载SwitchyOmega</h2><p>chrome 的插件商店是需要翻墙的，以前可以到其他地方把这个插件下载下来，拖进插件管理中心就行了。但是现在版本更新后好像不行了<br>我的所有插件都是和chrome账户同步了的，所以我只需要登陆账户就行了，那么问题就来了，chrome登陆账户也是需要翻墙的<br>现在的办法就是用全局代理，给出设置后的截图</p>
 <p><img src="https://yjqing.xin/file/blog2.png" alt="text"></p>
 <p>设置好之后就全局代理了</p>
 <h2 id="proxychains"><a href="#proxychains" class="headerlink" title="proxychains"></a>proxychains</h2><p>如果某个应用想要临时代理以下，那就需要用到proxychains了</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><blockquote>
-<p>sudo dnf install proxychains</p>
-</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><code>sudo dnf install proxychains</code></p>
 <h3 id="配置-etc-proxychains-conf"><a href="#配置-etc-proxychains-conf" class="headerlink" title="配置 /etc/proxychains.conf"></a>配置 /etc/proxychains.conf</h3><p>把这个文件最后一行改为</p>
-<blockquote>
-<p>socks5  127.0.0.1 1080</p>
-</blockquote>
+<p><code>socks5  127.0.0.1 1080</code></p>
 <p>在开启shadowsocks的情况下，就可以直接用 proxychains4 某某程序 来临时代理一下了</p>
 <h2 id="i3管理器"><a href="#i3管理器" class="headerlink" title="i3管理器"></a>i3管理器</h2><p>作为一个非常强大的平铺式桌面管理器，在我朋友@nova第一次给我用了之后就爱不释手了，我的朋友们全都在用它</p>
 <h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><p>借助nova的博客<a href="https://nova.moe/" target="_blank" rel="noopener">https://nova.moe/</a>，安装</p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置文件在 /home/allen/.config/i3/config，我的配置文件在<a href="https://github.com/allenliu123/config/blob/master/i3/config" target="_blank" rel="noopener">我的github</a>上</p>
 <h3 id="配置i3中文输入法"><a href="#配置i3中文输入法" class="headerlink" title="配置i3中文输入法"></a>配置i3中文输入法</h3><p>i3里面只有英文输入，对于一个中国人必须要一个中文输入法呀<br>执行两步就够了</p>
-<blockquote>
-<p>终端输入 ibus-daemon<br>然后ibus-setup添加中文 </p>
-</blockquote>
+<ul>
+<li>终端输入 ibus-daemon</li>
+<li>然后ibus-setup添加中文 </li>
+</ul>
 <p>搞定</p>
 <h2 id="好用的工具-sublime-text3"><a href="#好用的工具-sublime-text3" class="headerlink" title="好用的工具 sublime-text3"></a>好用的工具 sublime-text3</h2><p>sublime 是一个非常小，但是功能非常强大的文本编辑器</p>
-<h3 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h3><blockquote>
-<p>sudo dnf install sublime-text</p>
-</blockquote>
+<h3 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h3><p><code>sudo dnf install sublime-text</code></p>
 <p>如果没有的话，可能需要自己到官网上下载repo</p>
 <h3 id="配置主题-boxy"><a href="#配置主题-boxy" class="headerlink" title="配置主题(boxy)"></a>配置主题(boxy)</h3><p>boxy 是我非常喜欢的主题，尤其是包里面的tomorrow</p>
-<blockquote>
-<p>ctrl + shift + p -&gt; install package control</p>
-</blockquote>
+<p><code>ctrl + shift + p -&gt; install package control</code></p>
 <p>它会安装Package Control 功能</p>
 <blockquote>
 <p>现在 ctrl + shift + p -&gt; package control install package -&gt; boxy theme</p>
